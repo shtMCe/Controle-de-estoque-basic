@@ -3,8 +3,8 @@
 typedef struct CATALOGO {
 
 	char nome[20];
-	int preco;
-	int estoque;
+	float preco;
+	int estoque, codigo=0;
 
 } PRODUTO;
 
@@ -13,8 +13,17 @@ int REDUZ_ESTOQUE (int quant_estoque, int quantos_reduzir) {
 	return quant_estoque;
 }
 
-int main( ) {
+void MOSTRA_PROD (PRODUTO p1){
+    printf("NOME: %s", p[i].nome);
+    printf("PRECO: %.2f", p[i].preco);
+    printf("NOME: %d", p[i].estoque);
+    printf("NOME: %d", p[i].codigo);
+}
 
+int main( ) {
+    
+    PRODUTO p1[10];
+    
 	int choise1;
 
 	do {
@@ -28,6 +37,66 @@ int main( ) {
 		printf("----------------------------\n");
 		
 		scanf("%d", &choise1);
+		
+		//CADASTRO
+		if (choise1 == 1){
+		    
+		   int n; 
+		   
+		   printf("Quantos produtos gostaria de cadastrar?\n");
+		   scanf("%d", &n);
+		   
+		   for ( int i = 0; i < n; i++ ) {
+		        
+		        printf("NOME: ");
+		        scanf("%s", p1[i].nome);
+		        
+		        printf("PRECO: ");
+		        scanf("%f", &p1[i].preco);
+		        
+		        printf("QUANTIDADE EXISTENTE NO ESTOQUE: ");
+		        scanf("%d", &p1[i].estoque);
+		        
+		        p1[i].codigo++;
+		        printf("CODIGO DO PRODUTO: %d", p1[i].codigo);
+		    } //le produtos
+		} 
+		
+		//EXIBE CADASTRADOS
+		else if (choise1 == 2){
+		    
+		    for ( i = 0; i < 10; i++ ){
+		        
+		        MOSTRA_PROD(p1[i]);
+		    } //printa
+		}
+		
+		//REDUZ ESTOQUE
+		else if (choise1 == 3){
+		    
+		    int codigo_temp, valor_temp;
+		    
+		    printf("Qual o codigo do produto que deseja alterar?\n");
+		    scanf("%d", &codigo_temp);
+		    
+		    printf("Qual valor deseja alterar no estoque?\n");
+		    printf("OBS: coloque o valor com o sinal desejado (+/-)\n");
+		    scanf("%d", &valor_temp);
+		    
+		    for ( i = 0; i < 10; i++ ){
+		        
+		        if (p1[i].codigo == codigo_temp){
+		            
+		            printf("O valor do estoque está em: %d", p1[i].codigo);
+		            
+		            p1[i].codigo += valor_temp;
+		            
+		            printf("Apos sua alteracao esta: %d", p1[i].codigo);
+		        }
+		            
+		    }
+		}
+		
 		
 	} while (choise1 != 4);
 
