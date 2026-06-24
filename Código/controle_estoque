@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+typedef struct CATALOGO {
+    
+    char nome[20];
+    int preco;
+    int estoque;
+    
+} PRODUTO;
+
+int REDUZ_ESTOQUE (int quant_estoque, int quantos_reduzir) {
+    quant_estoque -= quantos_reduzir;
+    return quant_estoque;   
+}
+
+int main( ) {
+    
+    printf("----------------------------\n");
+    printf("   CONTROLE DE ESTOQUE\n");
+    printf("----------------------------\n");
+    printf("1 - Cadastrar produto\n");
+    printf("2 - Mostrar produtos\n");
+    printf("3 - Reduzir estoque\n");
+    printf("4 - Sair\n");
+    printf("----------------------------\n");
+    
+    
+
+    return 0;
+}
