@@ -4,27 +4,33 @@ typedef struct CATALOGO {
 
 	char nome[20];
 	float preco;
-	int estoque, codigo=0;
+	int estoque;
+	int codigo; 
 
 } PRODUTO;
 
-int REDUZ_ESTOQUE (int quant_estoque, int quantos_reduzir) {
+
+int REDUZ_ESTOQUE(int quant_estoque, int quantos_reduzir) {
 	quant_estoque -= quantos_reduzir;
 	return quant_estoque;
 }
 
-void MOSTRA_PROD (PRODUTO p1){
-    printf("NOME: %s", p[i].nome);
-    printf("PRECO: %.2f", p[i].preco);
-    printf("NOME: %d", p[i].estoque);
-    printf("NOME: %d", p[i].codigo);
+void MOSTRA_PROD(PRODUTO p1) {
+	printf("\n------------------\n");
+	printf("NOME: %s\n", p1.nome);
+	printf("PRECO: %.2f\n", p1.preco);
+	printf("ESTOQUE: %d\n", p1.estoque);
+	printf("CODIGO: %d\n", p1.codigo);
+	printf("------------------\n");
 }
 
-int main( ) {
-    
-    PRODUTO p1[10];
-    
+int main() {
+
+	PRODUTO p1[10];
+
 	int choise1;
+	int i; // precisa existir fora dos loops
+	int totalProdutos = 0; // controla quantidade cadastrada
 
 	do {
 		printf("----------------------------\n");
@@ -32,72 +38,74 @@ int main( ) {
 		printf("----------------------------\n");
 		printf("1 - Cadastrar produto\n");
 		printf("2 - Mostrar produtos\n");
-		printf("3 - Reduzir estoque\n");
+		printf("3 - Alterar estoque\n");
 		printf("4 - Sair\n");
 		printf("----------------------------\n");
-		
+
 		scanf("%d", &choise1);
-		
-		//CADASTRO
-		if (choise1 == 1){
-		    
-		   int n; 
-		   
-		   printf("Quantos produtos gostaria de cadastrar?\n");
-		   scanf("%d", &n);
-		   
-		   for ( int i = 0; i < n; i++ ) {
-		        
-		        printf("NOME: ");
-		        scanf("%s", p1[i].nome);
-		        
-		        printf("PRECO: ");
-		        scanf("%f", &p1[i].preco);
-		        
-		        printf("QUANTIDADE EXISTENTE NO ESTOQUE: ");
-		        scanf("%d", &p1[i].estoque);
-		        
-		        p1[i].codigo++;
-		        printf("CODIGO DO PRODUTO: %d", p1[i].codigo);
-		    } //le produtos
-		} 
-		
-		//EXIBE CADASTRADOS
-		else if (choise1 == 2){
-		    
-		    for ( i = 0; i < 10; i++ ){
-		        
-		        MOSTRA_PROD(p1[i]);
-		    } //printa
+
+		// CADASTRO
+		if (choise1 == 1) {
+
+			int n;
+
+			printf("Quantos produtos gostaria de cadastrar?\n");
+			scanf("%d", &n);
+
+			for (i = 0; i < n; i++) {
+
+				printf("NOME: ");
+				scanf("%s", p1[totalProdutos].nome);
+
+				printf("PRECO: ");
+				scanf("%f", &p1[totalProdutos].preco);
+
+				printf("QUANTIDADE EM ESTOQUE: ");
+				scanf("%d", &p1[totalProdutos].estoque);
+
+				// código sequencial correto
+				p1[totalProdutos].codigo = totalProdutos + 1;
+
+				printf("CODIGO DO PRODUTO: %d\n", p1[totalProdutos].codigo);
+
+				totalProdutos++;
+			}
 		}
-		
-		//REDUZ ESTOQUE
-		else if (choise1 == 3){
-		    
-		    int codigo_temp, valor_temp;
-		    
-		    printf("Qual o codigo do produto que deseja alterar?\n");
-		    scanf("%d", &codigo_temp);
-		    
-		    printf("Qual valor deseja alterar no estoque?\n");
-		    printf("OBS: coloque o valor com o sinal desejado (+/-)\n");
-		    scanf("%d", &valor_temp);
-		    
-		    for ( i = 0; i < 10; i++ ){
-		        
-		        if (p1[i].codigo == codigo_temp){
-		            
-		            printf("O valor do estoque está em: %d", p1[i].codigo);
-		            
-		            p1[i].codigo += valor_temp;
-		            
-		            printf("Apos sua alteracao esta: %d", p1[i].codigo);
-		        }
-		            
-		    }
+
+		// EXIBIR PRODUTOS
+		else if (choise1 == 2) {
+
+			for (i = 0; i < totalProdutos; i++) {
+				MOSTRA_PROD(p1[i]);
+			}
 		}
-		
-		
+
+		// ALTERAR ESTOQUE
+		else if (choise1 == 3) {
+
+			int codigo_temp, valor_temp;
+
+			printf("Qual o codigo do produto?\n");
+			scanf("%d", &codigo_temp);
+
+			printf("Qual valor deseja alterar no estoque?\n");
+			printf("Use + para adicionar ou - para remover\n");
+			scanf("%d", &valor_temp);
+
+			for (i = 0; i < totalProdutos; i++) {
+
+				if (p1[i].codigo == codigo_temp) {
+
+					printf("Estoque atual: %d\n", p1[i].estoque);
+
+					// usa sua função corretamente
+					p1[i].estoque = REDUZ_ESTOQUE(p1[i].estoque, - valor_temp);
+
+					printf("Novo estoque: %d\n", p1[i].estoque);
+				}
+			}
+		}
+
 	} while (choise1 != 4);
 
 	return 0;
